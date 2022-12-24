@@ -1,0 +1,69 @@
+close all
+clear
+
+%variables for sine wave 
+Fs = 8000;
+f0 = 440;
+n = 0:15999;
+
+%variables for "continuous" sine wave
+Fs_dense = Fs*10;
+n_dense = 0:159999;
+
+x = sin(2*pi*(f0/Fs)*n);
+x_dense = sin(2*pi*(f0/Fs_dense)*n_dense);
+
+subplot(4,1,1)
+stem(n,x)
+hold on
+plot(n_dense/10, x_dense)
+hold off 
+xlim([0 200])
+max_freq = 
+
+
+plot_num = 2;
+HARMONIC_FINAL = 13;
+for HARMONIC = 3:2:HARMONIC_FINAL
+    x = x + sin(2*pi*HARMONIC*(f0/Fs)*n)/HARMONIC;
+    x_dense = x_dense + sin(2*pi*HARMONIC*(f0/Fs_dense)*n_dense)/HARMONIC;
+
+
+    if HARMONIC == 5 || HARMONIC == 9 || HARMONIC == 13
+        subplot(4, 1, plot_num)
+        stem(n, x)
+        hold on
+        plot(n_dense/10, x_dense)
+        xlim([0 200])
+        plot_num = plot_num + 1;
+    end
+end
+
+sound(x, Fs);
+
+ 
+% %adding third and fifth harmonic harmonic 
+% x_third = x + sin(2*pi*7*(f0/Fs)*n)/7;
+% x_third_fifth = x_third + sin(2*pi*11*(f0/Fs)*n)/11;
+% 
+% %adding third and fifth harmonic harmonic 
+% x_seventh = x_third_fifth + sin(2*pi*15*(f0/Fs)*n)/15;
+% x_seventh_ninth = x_seventh + sin(2*pi*19*(f0/Fs)*n)/19;
+% 
+% %adding third and fifth harmonic harmonic 
+% x_11 = x_seventh_ninth + sin(2*pi*23*(f0/Fs)*n)/23;
+% x_11_13 = x_11 + sin(2*pi*27*(f0/Fs)*n)/27;
+
+
+%plotting 
+% subplot(4,1,1)
+% stem(n,x)
+% subplot(4,1,2)
+% stem(n_dense, x_dense)
+%
+
+%frequency as a sound
+%sound(x_third_fifth, Fs);
+%sound(x_seventh_ninth, Fs);
+sound(x, Fs);
+
